@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Калькулятор Огнезащиты (ОГЗ) | Расчет площади и расхода эмали</title>
+    <meta name="description" content="Бесплатный онлайн калькулятор для расчета площади поверхности металлоконструкций с учетом толщины огнезащитного покрытия. Точный расчет финишной площади, коэффициенты уплотнения (ПТМ).">
+    <meta name="keywords" content="калькулятор огз, расчет огнезащиты, площадь окраски, птм, расход эмали, площадь двутавра, расчет краски для металла, строительный калькулятор">
+    <meta name="author" content="LNK Expert">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="🔥 Калькулятор площади ОГЗ">
+    <meta property="og:description" content="Посчитай реальный расход финишной эмали с учетом толщины огнезащитного слоя. Точный инженерный расчет.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tvoysait.github.io/"> <meta property="og:site_name" content="Калькулятор ОГЗ">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏗️</text></svg>">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Калькулятор площади поверхности огнезащитного покрытия",
+      "url": "https://lnkexpert.ru",
+      "applicationCategory": "ConstructionApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB"
+      },
+      "description": "Инструмент для расчета изменения площади поверхности металлоконструкций (двутавров, труб, листов) после нанесения слоя огнезащиты.",
+      "author": {
+          "@type": "Organization",
+          "name": "LNK Expert"
+      }
+    }
+    </script>
+
+    <style>
+        /* --- СТИЛИ (CSS) --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Центрирование по вертикали */
+            flex-direction: column; /* Чтобы текст SEO был под калькулятором */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 420px;
+            width: 100%;
+            margin-bottom: 30px; /* Отступ до текста снизу */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #202124;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            font-size: 13px;
+            color: #5f6368;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        /* --- ФОРМА --- */
+        .form-group { margin-bottom: 18px; }
+        
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            color: #3c4043; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            border: 2px solid #f1f3f4;
+            border-radius: 12px; 
+            font-size: 16px; 
+            background-color: #f8f9fa; 
+            box-sizing: border-box; 
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #1a73e8; 
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(26,115,232,0.1);
+        }
+        
+        .hint { font-size: 11px; color: #80868b; margin-top: 6px; }
+
+        /* --- КНОПКА --- */
+        button.calc-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(26,115,232,0.3);
+        }
+        button.calc-btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26,115,232,0.4);
+        }
+
+        /* --- РЕЗУЛЬТАТЫ --- */
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 16px;
+            border: 1px solid #e8eaed;
+            display: none;
+        }
+
+        .result-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .result-row:last-child { margin-bottom: 0; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #dadce0; }
+        .res-label { font-size: 14px; color: #5f6368; }
+        .res-value { font-weight: 700; font-size: 16px; color: #202124; }
+        .res-main { font-size: 22px; color: #1a73e8; }
+        .diff-plus { color: #d93025; background: rgba(217, 48, 37, 0.1); padding: 2px 6px; border-radius: 4px;}
+
+        /* --- ПРОМО --- */
+        .promo-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #f1f3f4;
+        }
+        
+        .promo-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: #9aa0a6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .service-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 10px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+            text-align: center;
+        }
+        .service-card:hover { transform: translateY(-3px); filter: brightness(1.05); }
+
+        .card-thermal { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3); }
+        .card-fire { background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); box-shadow: 0 4px 15px rgba(221, 36, 118, 0.3); }
+
+        .card-icon { font-size: 24px; margin-bottom: 8px; }
+        .card-title { font-size: 13px; font-weight: 700; line-height: 1.2; }
+
+        .telegram-btn {
+            display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px;
+            border-radius: 12px; background-color: #fff; border: 2px solid #2AABEE; color: #2AABEE;
+            font-weight: 700; text-decoration: none; font-size: 15px; box-sizing: border-box;
+        }
+        .telegram-btn:hover { background-color: #2AABEE; color: white; }
+        .tg-icon { margin-right: 8px; font-size: 18px;}
+
+        /* --- SEO ТЕКСТ (ДЛЯ ПОИСКОВИКОВ) --- */
+        .seo-text {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .seo-text h2 { font-size: 18px; color: #333; margin-top: 30px; margin-bottom: 10px;}
+        .seo-text p { margin-bottom: 15px; }
+        .seo-text ul { padding-left: 20px; }
+        .seo-text li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Калькулятор ОГЗ</h1>
+    
+    <div class="description">
+        Для определения точной площади под финишное покрытие эмалью и расчета разницы между «голым» металлом и слоем с ОГЗ.
+    </div>
+    
+    <div class="form-group">
+        <label>Тип профиля</label>
+        <select id="type">
+            <option value="open">Двутавр / Швеллер / Уголок</option>
+            <option value="closed">Труба / Лист / Замкнутый</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Исходная площадь (м²)</label>
+        <input type="number" id="area" placeholder="0.00" inputmode="decimal" step="0.01">
+    </div>
+
+    <div class="form-group">
+        <label>Обогреваемый периметр (мм)</label>
+        <input type="number" id="perimeter" placeholder="0" inputmode="numeric">
+        <div class="hint">⚠️ Если балка под бетоном — вычитайте ширину полки</div>
+    </div>
+
+    <div class="form-group">
+        <label>Толщина слоя ОГЗ (мм)</label>
+        <input type="number" id="thickness" placeholder="0.00" inputmode="decimal" step="0.01">
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Рассчитать</button>
+
+    <div class="result-box" id="result">
+        <div class="result-row">
+            <span class="res-label">Прирост площади:</span>
+            <span class="res-value" id="percent-val">0%</span>
+        </div>
+        <div class="result-row">
+            <span class="res-label">Разница:</span>
+            <span class="res-value diff-plus" id="diff-area">+0 м²</span>
+        </div>
+        <div class="result-row">
+            <span class="res-label"><b>Итого (под эмаль):</b></span>
+            <span class="res-value res-main" id="final-area">0 м²</span>
+        </div>
+    </div>
+
+    <div class="promo-section">
+        <div class="promo-header">Мои проекты</div>
+        <div class="services-grid">
+            <a href="https://www.lnkexpert.ru" class="service-card card-thermal" target="_blank">
+                <div class="card-icon">🌡️</div>
+                <div class="card-title">Тепловизионное<br>обследование</div>
+            </a>
+            <a href="https://kam-kluch.ru" class="service-card card-fire" target="_blank">
+                <div class="card-icon">🔥</div>
+                <div class="card-title">Огнезащита<br>конструкций</div>
+            </a>
+        </div>
+        <a href="https://t.me/lnkexpert" class="telegram-btn" target="_blank">
+            <span class="tg-icon">✈️</span> Написать в Telegram
+        </a>
+    </div>
+</div>
+
+<article class="seo-text">
+    <h2>Как работает расчет площади огнезащиты?</h2>
+    <p>При нанесении огнезащитных составов (штукатурок или вспучивающихся красок) геометрические размеры металлических профилей увеличиваются. Это приводит к росту площади поверхности, которую необходимо покрыть финишной эмалью.</p>
+    
+    <p>Наш калькулятор использует алгоритм геометрического расширения контура:</p>
+    <ul>
+        <li><b>Для замкнутых профилей (Трубы, Листы):</b> Учитывается прирост периметра на всех 4-х внешних углах (коэффициент 8).</li>
+        <li><b>Для открытых профилей (Двутавры, Швеллеры):</b> Учитывается эффективный прирост на внешних гранях с компенсацией внутренних углов (коэффициент 4).</li>
+    </ul>
+
+    <p>Инструмент полезен инженерам ПТО, сметчикам и прорабам для заказа материалов с учетом коэффициента потерь и реального утолщения слоя (ПТМ).</p>
+</article>
+
+<script>
+    function calculate() {
+        let type = document.getElementById('type').value;
+        let S_old_str = document.getElementById('area').value.replace(',', '.');
+        let P_mm_str = document.getElementById('perimeter').value.replace(',', '.');
+        let h_mm_str = document.getElementById('thickness').value.replace(',', '.');
+
+        let S_old = parseFloat(S_old_str);
+        let P_mm = parseFloat(P_mm_str);
+        let h_mm = parseFloat(h_mm_str);
+
+        if (isNaN(S_old) || isNaN(P_mm) || isNaN(h_mm)) {
+            alert("Пожалуйста, заполните все поля цифрами!");
+            return;
+        }
+        if (P_mm === 0) { alert("Периметр не может быть 0!"); return; }
+
+        let sides = (type === 'closed') ? 4 : 2;
+        let K_geom = sides * 2;
+        let increaseFactor = (K_geom * h_mm) / P_mm;
+        
+        let S_new = S_old * (1 + increaseFactor);
+        let S_diff = S_new - S_old;
+
+        let resultBox = document.getElementById('result');
+        resultBox.style.display = 'block';
+
+        document.getElementById('final-area').innerText = S_new.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 3 }) + " м²";
+        document.getElementById('percent-val').innerText = "+" + (increaseFactor * 100).toFixed(2) + "%";
+        document.getElementById('diff-area').innerText = "+" + S_diff.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 3 }) + " м²";
+    }
+</script>
+
+</body>
+</html>
